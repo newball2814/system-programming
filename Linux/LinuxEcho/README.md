@@ -18,4 +18,5 @@
 
 ## Demo
 
-![demo](./ref/demo.mp4)
+<video src="./ref/demo.mp4" placeholder="./ref/demo.mp4" loop controls muted title="demo">
+</video>
