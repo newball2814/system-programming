@@ -17,6 +17,7 @@
 ![model](./ref/process.jpg)
 
 ## Demo
+https://github.com/newball2814/system-programming/assets/35733326/e48f68fe-0e32-41a5-813f-d09c88cd40c9
 
-<video src="./ref/demo.mp4" placeholder="./ref/demo.mp4" loop controls muted title="demo">
-</video>
+## TODO
+- [ ] Implement multi-thread
