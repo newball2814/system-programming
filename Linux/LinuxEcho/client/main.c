@@ -1,6 +1,6 @@
+#include <stdio.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -13,20 +13,22 @@ void send_to_server(int sockfd);
 int main(int argc, char *argv[]) {
 	int sockfd, port;
 	char *addr;
+	struct sockaddr_in servaddr;
+
 	if (argc < 3) {
-		printf("Usage: TBD\n");
-		return EXIT_FAILURE;
+		printf("Usage: %s [ADDR] [PORT]\n", argv[0]);
+		exit(EXIT_FAILURE);
 	}
 	addr = argv[1];
 	port = atoi(argv[2]);
 
-	struct sockaddr_in servaddr;
-
+    // Init socket
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
 		printf("Socket creation failed.\n");
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
+
 	printf("Socket created successfully!\n");
 	memset(&servaddr, 0, sizeof(servaddr));
 
@@ -37,14 +39,13 @@ int main(int argc, char *argv[]) {
 	// Connect server socket with client socket 
 	if (connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) != 0) {
 		printf("Failed to connect to server.\n");
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 	printf("Connected to server at %s, port: %d\n", addr, port);
 	
 	send_to_server(sockfd);
 
 	close(sockfd);
-
 	return EXIT_SUCCESS;
 }
 
@@ -52,18 +53,22 @@ void send_to_server(int sockfd) {
 	char buf[MAX_BUFFER_SIZE];
 	int n;
 
-	while (69) {
+	while (1337) {
 		memset(buf, 0, sizeof(buf));
 		printf("> ");
 		n = 0;
+        // Read stdin
 		while ((buf[n++] = getchar()) != '\n') 
 			;
 
 		write(sockfd, buf, sizeof(buf));
 		memset(buf, 0, sizeof(buf));
+
+        // Acknowledge server's message
 		read(sockfd, buf, sizeof(buf));
-		printf("From server: %s", buf);
-		if ((strncmp(buf, "exit", 4)) == 0) {
+		printf("Message server received: %s", buf);
+
+		if (strncmp(buf, "EXIT", 4) == 0) {
 			printf("Client exited.\n");
 			break;
 		}
