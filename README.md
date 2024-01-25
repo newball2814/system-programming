@@ -8,5 +8,5 @@
 - [X] 6 - Linux Echo
 - [ ] 7 - Backdoor
 - [X] 8 - Keylogger
-- [ ] 9 - Downloader
+- [X] 9 - Downloader
 - [ ] 10 - Dropper
