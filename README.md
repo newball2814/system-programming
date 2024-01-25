@@ -1,7 +1,7 @@
 # VCS System Programming
 
 - [X] 1 - File Scanner
-- [ ] 2 - Process Viewer
+- [X] 2 - Process Viewer
 - [ ] 3 - Chatroom
 - [X] 4 - Linux FS
 - [X] 5 - Linux Process
