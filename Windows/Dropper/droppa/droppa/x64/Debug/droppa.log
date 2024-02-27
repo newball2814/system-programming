@@ -1,0 +1,3 @@
+﻿  droppa.cpp
+D:\VCS\System Programming\system-programming\droppa\droppa\droppa.cpp(18,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  droppa.vcxproj -> D:\VCS\System Programming\system-programming\droppa\x64\Debug\droppa.exe
