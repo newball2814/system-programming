@@ -56,31 +56,34 @@ int main(int argc, char *argv[]) {
     printf("Server listening on port %d.\n", port);
 
     // Loop to receive request til EOF
-    while (1) {
+    while (1337) {
         len = sizeof(client);
 
         if ((connfd = accept(sockfd, (struct sockaddr *)&client, &len)) < 0) {
             perror("Failed to accept client.\n");
             continue;
         }
+        printf("Accepted client!!\n");        
+        
+        // Create a new thread for each client connection
+        pthread_t thread_id;
+        if (pthread_create(&thread_id, NULL, listen_to_client, (void *)&connfd) != 0) {
+            perror("Failed to create thread.");
+            close(connfd);
+            continue;
+        }
 
-        printf("Accepted client!!\n");
-        listen_to_client(connfd);
-
-        printf("Closing connection...\n");
-        close(connfd);
+        printf("Closing connection...\n");                
         break;      // Have to add `break` cuz server get stuck on closing connection without exiting the program -_-
     }
-
-    close(sockfd);
+    
     return EXIT_SUCCESS;
 }
 
-void listen_to_client(int connfd) {
+void *listen_to_client(void *arg) {
+    int connfd = *((int *)arg);
     char buf[MAX_BUFFER_SIZE];
     int n;
-
-    // Loop to constantly listen for new message
     while (1337) {
         memset(buf, 0, MAX_BUFFER_SIZE);
         if ((n = read(connfd, buf, sizeof(buf))) <= 0) {
@@ -91,15 +94,8 @@ void listen_to_client(int connfd) {
         printf("Received from client: %s", buf);
         write(connfd, buf, strlen(buf) + 1);
         memset(buf, 0, MAX_BUFFER_SIZE);
-
-        // Read message
-        // n = 0;
-        // while ((buf[n++] = getchar()) != '\n')
-        //     ;
-        //
-        // if (strncmp("EXIT", buf, 4) == 0) {
-        //     printf("Server closing...\n");
-        //     break;
-        // }
     }
+
+    close(connfd);
+    pthread_exit(NULL);
 }
