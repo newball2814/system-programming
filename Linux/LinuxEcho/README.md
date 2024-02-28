@@ -20,4 +20,4 @@
 https://github.com/newball2814/system-programming/assets/35733326/e48f68fe-0e32-41a5-813f-d09c88cd40c9
 
 ## TODO
-- [ ] Implement multi-thread
+- [X] Implement multi-thread
